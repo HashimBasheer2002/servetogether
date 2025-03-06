@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .title {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    .donate-form {
+        text-align: center;
+    }
+    .donate-form input[type="number"] {
+        padding: 8px;
+        width: 80%;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .pay-btn {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .pay-btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="container">
+    <h1 class="title">Donate to Support</h1>
+
+    <form class="donate-form" method="post">
+        {% csrf_token %}
+        <input type="number" name="amount" placeholder="Enter donation amount (INR)" required min="1">
+        <br>
+        <button type="submit" class="pay-btn">Proceed to Pay</button>
+    </form>
+
+    {% if order_id %}
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "{{ key_id }}",
+            "amount": "{{ amount }}",
+            "currency": "INR",
+            "name": "Your Organization Name",
+            "description": "Donation",
+            "order_id": "{{ order_id }}",
+            "handler": function (response) {
+                alert("Payment successful. Payment ID: " + response.razorpay_payment_id);
+                window.location.href = "/payment_success/";
+            },
+            "theme": {
+                "color": "#007bff"
+            }
+        };
+        var rzp = new Razorpay(options);
+        rzp.open();
+    </script>
+    {% endif %}
+</div>
+{% endblock %}

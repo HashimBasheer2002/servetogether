@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .feedback-list {
+            margin-top: 30px;
+        }
+
+        .feedback-item {
+            background: #f4f4f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .feedback-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .feedback-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .feedback-item h3 {
+            font-size: 20px;
+            color: #222;
+        }
+
+        .feedback-item p {
+            font-size: 16px;
+            color: #555;
+            margin-top: 8px;
+        }
+
+        form {
+            margin-top: 40px;
+        }
+
+        form label {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 6px;
+            display: block;
+            font-weight: 600;
+        }
+
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #f9f9f9;
+            font-size: 16px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 12px;
+            background: #ff7f50;
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        form button:hover {
+            background: #ff6b3d;
+            transform: translateY(-3px);
+        }
+
+        form button:active {
+            transform: translateY(2px);
+        }
+
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff7f50;
+        }
+
+        .feedback-list h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            text-align: center;
+            color: #777;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Feedback Page</h1>
+
+        <!-- Feedback List -->
+        <div class="feedback-list">
+            <h2>All Feedback</h2>
+            {% for feedback in feedbacks %}
+                <div class="feedback-item">
+                    {% if feedback.volunteer.profile_picture %}
+                        <img src="{{ feedback.volunteer.profile_picture.url }}" alt="{{ feedback.volunteer.name }}'s profile picture">
+                    {% else %}
+                        <img src="https://via.placeholder.com/50" alt="Default profile picture">
+                    {% endif %}
+                    <div>
+                        <h3>{{ feedback.volunteer.name }} on "{{ feedback.task.name }}"</h3>
+                        <p>{{ feedback.comments }}</p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No feedback available yet.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Add Feedback Form -->
+        <form method="POST" action="{% url 'feedback_list' %}">
+            {% csrf_token %}
+            <label for="volunteer">Volunteer</label>
+            <select id="volunteer" name="volunteer" required>
+                {% for volunteer in volunteers %}
+                    <option value="{{ volunteer.id }}">{{ volunteer.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="task">Task</label>
+            <select id="task" name="task" required>
+                {% for task in tasks %}
+                    <option value="{{ task.id }}">{{ task.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="comments">Comments</label>
+            <textarea id="comments" name="comments" placeholder="Write your feedback here..." required></textarea>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+</body>
+<br><br>
+{% endblock %}

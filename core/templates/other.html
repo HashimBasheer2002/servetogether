@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+/* Container Styling */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+.title {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Description Styling */
+.description {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.donation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Input and Textarea Styling */
+.donation-form input[type="text"],
+.donation-form textarea,
+.donation-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* Button Styling */
+.submit-btn {
+    padding: 12px 20px;
+    background: #03C03C;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #50C878;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .description {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .description {
+        font-size: 0.85rem;
+    }
+}
+</style>
+
+<div class="container">
+    <h2 class="title">Donate Other Resources</h2>
+    <p class="description">Please fill out the form below to donate your valuable resources.</p>
+
+    <form method="post" class="donation-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-btn">Submit Donation</button>
+    </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

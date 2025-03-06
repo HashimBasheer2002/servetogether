@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* Form Container */
+    form {
+        position: relative;
+        top: 100px;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Labels */
+    form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: grey;
+    }
+
+    /* Inputs and Textareas */
+    form input[type="text"],
+    form textarea {
+        width: 96%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid grey;
+        border-radius: 5px;
+        background: white;
+        color: #333;
+    }
+
+    /* Button */
+    form button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        background:#32de84;
+        color: #fff;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    /* Button Hover Effect */
+    form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(30, 144, 255, 0.4);
+    }
+</style>
+
+
+<form method="POST">
+    {% csrf_token %}
+
+
+ <label for="location">Your Name</label>
+    <input type="text" name="name" id="name" required>
+
+    <label for="description">Description of Need:</label>
+    <textarea name="description" id="description" required></textarea>
+
+    <label for="location">Current Location:</label>
+    <input type="text" name="location" id="location" required>
+
+    <label for="contact_details">Contact Details:</label>
+    <input type="text" name="contact_details" id="contact_details" required>
+
+    <label for="essentials">Essentials Needed:</label>
+    <textarea name="essentials" id="essentials" required></textarea>
+
+    <label for="contact_details">Volunteers Needed</label>
+    <input type="number" name="number" id="number" required>
+    <br>
+    <br>
+    <button type="submit">Submit Request</button>
+</form>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

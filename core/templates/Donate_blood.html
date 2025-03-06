@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Global styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #e60000;
+    margin-bottom: 20px;
+}
+
+/* Form container styling */
+.donation-form-container {
+position:relative;
+top:100px;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Form content styling */
+.form-content {
+    margin-bottom: 20px;
+}
+
+form p {
+    margin-bottom: 15px;
+}
+
+form label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+/* Input focus and hover effect */
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #e60000;
+    outline: none;
+}
+
+form input[type="number"],
+form input[type="text"] {
+    width: 100%;
+}
+
+form textarea {
+    height: 100px;
+    resize: none;
+}
+
+/* Button styling */
+.donate-btn {
+    background-color: #e60000;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.donate-btn:hover {
+    background-color: #c20000;
+}
+
+.donate-btn:focus {
+    outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .donation-form-container {
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+}
+
+</style>
+    <div class="donation-form-container">
+        <h2>Donate Blood</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-content">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="donate-btn">Donate Blood</button>
+        </form>
+    </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

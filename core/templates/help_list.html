@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-top: 20px;
+  }
+
+  .list-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .list-group-item {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .list-group-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  h5 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #555;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  p strong {
+    color: #007bff;
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 600px) {
+    .list-group {
+      flex-direction: column;
+      padding: 10px;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<h2>Your Help Requests</h2>
+
+<div class="list-group">
+    {% for request in user_requests %}
+    <div class="list-group-item">
+        <h5>{{ request.description }}</h5>
+        <p><strong>User:</strong> {{ request.user }}</p>
+        <p><strong>Status:</strong> {{ request.get_status_display }}</p>
+        <p><strong>Location:</strong> {{ request.location }}</p>
+        <p><strong>Essentials:</strong> {{ request.essentials }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

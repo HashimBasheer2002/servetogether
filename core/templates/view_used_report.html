@@ -1,0 +1,170 @@
+{% extends 'base.html'%}
+{% block content %}
+<html lang="en">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+
+
+    .card {
+        max-width: 800px;
+        width: 90%;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    h2 {
+        margin-bottom: 30px;
+        text-align: center;
+        color: #2d3748;
+        font-size: 2rem;
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 10px;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: #4299e1;
+        border-radius: 2px;
+    }
+
+    .resource-list {
+        display: grid;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .resource-card {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+    }
+
+    .resource-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .resource-card h3 {
+        margin-bottom: 15px;
+        color: #2d3748;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .resource-card p {
+        margin-bottom: 10px;
+        color: #4a5568;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .resource-card strong {
+        color: #2d3748;
+        font-weight: 600;
+    }
+
+    .link {
+        display: inline-block;
+        width: 100%;
+        padding: 12px 24px;
+        background: #4299e1;
+        color: white;
+        text-decoration: none;
+        text-align: center;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .link:hover {
+        background: #3182ce;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(66, 153, 225, 0.2);
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            width: 95%;
+            padding: 20px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .resource-card {
+            padding: 15px;
+        }
+
+        .resource-card h3 {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .card {
+            width: 100%;
+            padding: 15px;
+            margin: 10px auto;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+        }
+
+        .resource-card p {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Used Resource Reports</title>
+</head>
+<body>
+    <div class="card">
+        <h2>Used Resource Reports</h2>
+        <div class="resource-list">
+            {% for resource in resources %}
+                <div class="resource-card">
+                    <h3>{{ resource.resource_name }}</h3>
+                    <p><strong>Quantity:</strong> {{ resource.quantity }}</p>
+                    <p><strong>Place Used:</strong> {{ resource.place_used }}</p>
+                    <p><strong>Time Used:</strong> {{ resource.time_used }}</p>
+                </div>
+            {% empty %}
+                <p class="resource-card">No resources used yet.</p>
+            {% endfor %}
+        </div>
+        <a href="{% url 'add_used_resource' %}" class="link">Add New Used Resource</a>
+    </div>
+</body>
+</html>
+{% endblock %}

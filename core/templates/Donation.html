@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate Resources</title>
+  <style>
+    .donation-cards-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      position: relative;
+      top: 100px;
+    }
+
+    .donation-card {
+      background-color: #f8f8f8;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      width: 350px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .donation-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .card-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+      color: #28a745;
+    }
+
+    .donation-title {
+      font-size: 20px;
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .donation-description {
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .donation-link {
+      text-decoration: none;
+    }
+
+    .donation-card a:hover .donation-title {
+      color: #007bff;
+    }
+
+    .donation-card a:hover .donation-description {
+      color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="donation-cards-container" data-aos="fade-up" data-aos-delay="200">
+    <!-- Money Donation Card -->
+    <div class="donation-card">
+      <div class="card-icon">
+        <i class="bi bi-currency-dollar"></i>
+      </div>
+      <a href="{% url 'donate_cash'%}" class="donation-link">
+        <h3 class="donation-title">Donate Money</h3>
+      </a>
+      <p class="donation-description">
+        Contribute funds to help those in need. Your donations can make a huge difference.
+      </p>
+    </div>
+
+    <!-- Blood Donation Card -->
+    <div class="donation-card">
+      <div class="card-icon">
+        <i class="bi bi-droplet"></i>
+      </div>
+      <a href="{% url 'donate_blood'%}" class="donation-link">
+        <h3 class="donation-title">Donate Blood</h3>
+      </a>
+      <p class="donation-description">
+        Help save lives by donating blood. Choose your blood group and the amount you want to donate.
+      </p>
+    </div>
+
+    <!-- Food Donation Card -->
+    <div class="donation-card">
+      <div class="card-icon">
+        <i class="bi bi-basket"></i>
+      </div>
+      <a href="{% url 'donate_food'%}" class="donation-link">
+        <h3 class="donation-title">Donate Food</h3>
+      </a>
+      <p class="donation-description">
+        Donate food to feed those in need. Select the food type and the amount for donation.
+      </p>
+    </div>
+
+    <!-- Other Resources Donation Card -->
+    <div class="donation-card">
+      <div class="card-icon">
+        <i class="bi bi-box"></i>
+      </div>
+      <a href="{%url 'donate_other'%}" class="donation-link">
+        <h3 class="donation-title">Donate Other Resources</h3>
+      </a>
+      <p class="donation-description">
+        You can donate items such as clothes, blankets, and other essential resources.
+      </p>
+    </div>
+  </div>
+</body>
+
+</html>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}

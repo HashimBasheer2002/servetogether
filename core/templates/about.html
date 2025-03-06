@@ -1,0 +1,43 @@
+
+{% extends 'base.html'%}
+{% block content %}
+{% load static %}
+<style>
+  .container{
+  position:relative;
+  top:100px;
+  }
+</style>
+<body>
+<div class="container">
+
+        <div class="row gy-4">
+          <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
+            <img src="{% static 'images/volunteergift.jpg'%}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+            <h3>Serve Together</h3>
+            <p class="fst-italic">
+              Our volunteers help during emergencies and disasters. They provide support, organize donations, and assist people in need. In tough times, our volunteers bring hope and make a difference.
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-all"></i> <span>Blood Donation – People in need can find available blood donations</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Disaster Alerts – Report disasters, and an alert is sent to the admin.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>AI Chatbot – Ask questions about disasters, survival tips, and related topics..</span></li>
+               <li><i class="bi bi-check2-all"></i> <span>Resource Donations – Donate money, blood, food, and other essential resources.</span></li>
+            </ul>
+            <p>
+              Our volunteers are always ready to help during emergencies and disasters. They work quickly and with great care to support people in need. Whether it's providing food, organizing blood donations, or helping with other urgent tasks, our volunteers are there to make sure everyone gets the help they need. In times of crisis, they bring hope and help turn tough situations into opportunities for recovery."
+            </p>
+          </div>
+        </div>
+
+      </div>
+</body>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

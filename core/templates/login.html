@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        .form-container {
+            position: relative;
+            top: 250px;
+            left: 700px;
+            background: #ffffff;
+            padding: 2.5rem;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .input-group {
+            position: relative;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+
+        button {
+            background-color: #4299e1;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: #3182ce;
+        }
+
+        .signup-link {
+            margin-top: 1.5rem;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .signup-link a {
+            color: #4299e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link a:hover {
+            color: #3182ce;
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1600px) {
+            .form-container {
+                left: 600px;
+            }
+        }
+
+        @media (max-width: 1400px) {
+            .form-container {
+                left: 500px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .form-container {
+                left: 400px;
+            }
+        }
+
+        @media (max-width: 1000px) {
+            .form-container {
+                left: 300px;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .form-container {
+                left: 200px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                left: 50%;
+                transform: translateX(-50%);
+                max-width: 90%;
+            }
+            .form-container:hover {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 1.5rem;
+                top: 150px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            input, button {
+                padding: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Welcome Back</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <button type="submit">Log In</button>
+        </form>
+
+        <p class="signup-link">Don't have an account? <a href="{% url 'register' %}">Sign up</a></p>
+    </div>
+</body>
+</html>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

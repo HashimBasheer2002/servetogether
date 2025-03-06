@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+  }
+
+  .form-container {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+  }
+
+  h2 {
+      text-align: center;
+      font-size: 2rem;
+      color: #27ae60;
+      margin-bottom: 20px;
+  }
+
+  .donation-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  input[type="number"],
+  select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="date"]:focus,
+  input[type="number"]:focus,
+  select:focus {
+      border-color: #27ae60;
+  }
+
+  .submit-btn {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: background-color 0.3s;
+  }
+
+  .submit-btn:hover {
+      background-color: #219653;
+  }
+
+  @media (max-width: 600px) {
+      .form-container {
+          padding: 20px;
+      }
+
+      h2 {
+          font-size: 1.8rem;
+      }
+  }
+</style>
+  <div class="form-container">
+    <h2>Donate Food</h2>
+    <form method="post" class="donation-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-btn">Submit Food Donation</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,685 @@
+
+{%extends 'base.html'%}
+{% load static %}
+{% block content%}
+<html lang="en">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<head>
+</head>
+    <style>
+        /* Container Styling */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Title Styling */
+.container h1 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Card Styling */
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* User Info Styling */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #f0f0f0;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Task Info */
+.task-info {
+    font-size: 1rem;
+    color: #444;
+}
+
+/* Feedback Text */
+.feedback-text {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Responsive Layout */
+@media (min-width: 768px) {
+    .card {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .user-info {
+        flex: 1;
+    }
+    .task-info {
+        flex: 1;
+        text-align: center;
+    }
+    .feedback-text {
+        flex: 2;
+    }
+}
+
+.Social-Btn {
+position:relative;
+top:35px;
+left:100px;
+  width: 4.5em;
+  height: 2.5em;
+  align-items: baseline;
+  justify-content: center;
+  border: none;
+
+
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.3s;
+  fill: white !important;
+  position: relative;
+}
+
+.svgContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  backdrop-filter: blur(0px);
+  letter-spacing: 0.8px;
+  border-radius: 10px;
+  transition: all 0.3s;
+  border: 1px solid rgba(156, 156, 156, 0.466);
+  color: white;
+  background: rgba(83, 69, 69, 0.562);
+}
+
+.svgContainer > svg {
+  width: 1.5rem;
+}
+
+.BG {
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  border-radius: 10px;
+  pointer-events: none;
+  transition: all 2s;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  color: transparent;
+  filter: blur(4px);
+  z-index: 4;
+}
+.BG::before {
+  position: absolute;
+  content: "";
+  height: 0.6em;
+  width: 0.6em;
+  bottom: -0.2em;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  background: white;
+  opacity: -1;
+  z-index: -10;
+  transition: 5s all;
+}
+.Social-Btn:hover .BG::before {
+  opacity: 1;
+}
+.Social-Btn:hover .BG {
+  transform: translateY(-130%);
+  transform-origin: bottom;
+  background: white;
+  color: black;
+  filter: blur(0px);
+}
+
+.Social-Btn:hover .svgContainer {
+  z-index: 20;
+  background-color: rgba(156, 156, 156, 0.466);
+  filter: blur(0px);
+  fill: black;
+}
+button {
+position:relative;
+top:70px;
+ padding: 0.8em 1.8em;
+ border: 2px solid #32de84;
+ position: relative;
+ overflow: hidden;
+ background-color: transparent;
+ text-align: center;
+ text-transform: uppercase;
+ font-size: 16px;
+ transition: .3s;
+ z-index: 1;
+ font-family: inherit;
+ color: #32de84;
+}
+        #button2{
+        position:absolute;
+        top:230px;
+        }
+
+        .hero-img{
+        max-width:800px;
+
+        }
+        .service-card-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Service Card Styling */
+  .service-card {
+  position:relative;
+  top:50px;
+    background: linear-gradient(145deg, #ffffff, #f3f3f7);
+    padding: 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 6px 6px 12px #d1d1d4, -8px -8px 16px #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  /* Hover Transformations */
+  .service-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 10px 10px 20px #b0b0b3, -10px -10px 20px #ffffff;
+  }
+
+  /* Service Icon */
+  .service-icon {
+
+    background: #FF033E;
+    color: white;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    margin: auto;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Service Title */
+  .service-title {
+    font-size: 1.6rem;
+    color: #333;
+    font-weight: bold;
+  }
+
+  /* Service Description */
+  .service-description {
+    color: #6b6b6b;
+    font-size: 1rem;
+  }
+
+  /* Service Link */
+  .service-link {
+    text-decoration: none;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .service-card {
+      padding: 1.5rem;
+    }
+
+    .service-icon {
+      width: 60px;
+      height: 60px;
+      font-size: 2rem;
+    }
+ .donate-btn {
+    display: inline-block;
+    background-color: #e63946; /* Red color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+
+  .donate-btn:hover {
+    background-color: #d62828; /* Darker red on hover */
+  }
+
+
+
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    background: linear-gradient(45deg, #2c3e50, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+.btn-get-started {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+}
+
+.btn-get-started:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+}
+
+/* Service Cards */
+.service-item {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+}
+
+.service-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.service-item h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.service-item p {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+/* Enhanced Button Styles */
+button {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #32de84, #28c76f);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(50, 222, 132, 0.2);
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(50, 222, 132, 0.3);
+}
+
+/* Enhanced Social Button */
+.Social-Btn {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.svgContainer {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.svgContainer svg {
+    fill: white;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Feedback Cards */
+.feedback-container {
+    margin-top: 4rem;
+}
+
+.feedback-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.feedback-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #3498db;
+    object-fit: cover;
+}
+
+.username {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-left: 1rem;
+}
+
+/* About Section */
+.about {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.section-title p {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .service-item {
+        margin-bottom: 2rem;
+    }
+}
+
+
+
+    </style>
+<body>
+
+
+<main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
+            <h1>Serve together</h1>
+            <p>Every small effort makes a big difference—join us as a volunteer</p>
+            <div class="d-flex">
+              {% if user.profile.role.name == 'Donor' %}
+              <a href="{%url 'volunteer_application'%}" class="btn-get-started">Apply Now</a>
+                {%endif%}
+
+
+            </div>
+          </div>
+          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="100">
+            <img src="{% static 'images/pngtree-volunteer-png-image_6586379.png'%}" class="img-fluid animated" alt="volunteer">
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+  {% if user.profile.role.name == 'Donor'%}  <!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <h4><a href="{% url 'chatbot'%}" class="stretched-link">Ask to Chatbot</a></h4>
+                <p>Our chatbot is here to guide you through disaster preparedness and survival. Ask about emergency kits, safety tips, or how to respond to specific disasters, and get instant, reliable advice to stay safe and prepared</p>
+
+        <div class="Social-Btn">
+          <span class="svgContainer">
+            <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M418.2 177.2c-5.4-1.8-10.8-3.5-16.2-5.1 .9-3.7 1.7-7.4 2.5-11.1 12.3-59.6 4.2-107.5-23.1-123.3-26.3-15.1-69.2 .6-112.6 38.4-4.3 3.7-8.5 7.6-12.5 11.5-2.7-2.6-5.5-5.2-8.3-7.7-45.5-40.4-91.1-57.4-118.4-41.5-26.2 15.2-34 60.3-23 116.7 1.1 5.6 2.3 11.1 3.7 16.7-6.4 1.8-12.7 3.8-18.6 5.9C38.3 196.2 0 225.4 0 255.6c0 31.2 40.8 62.5 96.3 81.5 4.5 1.5 9 3 13.6 4.3-1.5 6-2.8 11.9-4 18-10.5 55.5-2.3 99.5 23.9 114.6 27 15.6 72.4-.4 116.6-39.1 3.5-3.1 7-6.3 10.5-9.7 4.4 4.3 9 8.4 13.6 12.4 42.8 36.8 85.1 51.7 111.2 36.6 27-15.6 35.8-62.9 24.4-120.5-.9-4.4-1.9-8.9-3-13.5 3.2-.9 6.3-1.9 9.4-2.9 57.7-19.1 99.5-50 99.5-81.7 0-30.3-39.4-59.7-93.8-78.4zM282.9 92.3c37.2-32.4 71.9-45.1 87.7-36 16.9 9.7 23.4 48.9 12.8 100.4-.7 3.4-1.4 6.7-2.3 10-22.2-5-44.7-8.6-67.3-10.6-13-18.6-27.2-36.4-42.6-53.1 3.9-3.7 7.7-7.2 11.7-10.7zM167.2 307.5c5.1 8.7 10.3 17.4 15.8 25.9-15.6-1.7-31.1-4.2-46.4-7.5 4.4-14.4 9.9-29.3 16.3-44.5 4.6 8.8 9.3 17.5 14.3 26.1zm-30.3-120.3c14.4-3.2 29.7-5.8 45.6-7.8-5.3 8.3-10.5 16.8-15.4 25.4-4.9 8.5-9.7 17.2-14.2 26-6.3-14.9-11.6-29.5-16-43.6zm27.4 68.9c6.6-13.8 13.8-27.3 21.4-40.6s15.8-26.2 24.4-38.9c15-1.1 30.3-1.7 45.9-1.7s31 .6 45.9 1.7c8.5 12.6 16.6 25.5 24.3 38.7s14.9 26.7 21.7 40.4c-6.7 13.8-13.9 27.4-21.6 40.8-7.6 13.3-15.7 26.2-24.2 39-14.9 1.1-30.4 1.6-46.1 1.6s-30.9-.5-45.6-1.4c-8.7-12.7-16.9-25.7-24.6-39s-14.8-26.8-21.5-40.6zm180.6 51.2c5.1-8.8 9.9-17.7 14.6-26.7 6.4 14.5 12 29.2 16.9 44.3-15.5 3.5-31.2 6.2-47 8 5.4-8.4 10.5-17 15.5-25.6zm14.4-76.5c-4.7-8.8-9.5-17.6-14.5-26.2-4.9-8.5-10-16.9-15.3-25.2 16.1 2 31.5 4.7 45.9 8-4.6 14.8-10 29.2-16.1 43.4zM256.2 118.3c10.5 11.4 20.4 23.4 29.6 35.8-19.8-.9-39.7-.9-59.5 0 9.8-12.9 19.9-24.9 29.9-35.8zM140.2 57c16.8-9.8 54.1 4.2 93.4 39 2.5 2.2 5 4.6 7.6 7-15.5 16.7-29.8 34.5-42.9 53.1-22.6 2-45 5.5-67.2 10.4-1.3-5.1-2.4-10.3-3.5-15.5-9.4-48.4-3.2-84.9 12.6-94zm-24.5 263.6c-4.2-1.2-8.3-2.5-12.4-3.9-21.3-6.7-45.5-17.3-63-31.2-10.1-7-16.9-17.8-18.8-29.9 0-18.3 31.6-41.7 77.2-57.6 5.7-2 11.5-3.8 17.3-5.5 6.8 21.7 15 43 24.5 63.6-9.6 20.9-17.9 42.5-24.8 64.5zm116.6 98c-16.5 15.1-35.6 27.1-56.4 35.3-11.1 5.3-23.9 5.8-35.3 1.3-15.9-9.2-22.5-44.5-13.5-92 1.1-5.6 2.3-11.2 3.7-16.7 22.4 4.8 45 8.1 67.9 9.8 13.2 18.7 27.7 36.6 43.2 53.4-3.2 3.1-6.4 6.1-9.6 8.9zm24.5-24.3c-10.2-11-20.4-23.2-30.3-36.3 9.6 .4 19.5 .6 29.5 .6 10.3 0 20.4-.2 30.4-.7-9.2 12.7-19.1 24.8-29.6 36.4zm130.7 30c-.9 12.2-6.9 23.6-16.5 31.3-15.9 9.2-49.8-2.8-86.4-34.2-4.2-3.6-8.4-7.5-12.7-11.5 15.3-16.9 29.4-34.8 42.2-53.6 22.9-1.9 45.7-5.4 68.2-10.5 1 4.1 1.9 8.2 2.7 12.2 4.9 21.6 5.7 44.1 2.5 66.3zm18.2-107.5c-2.8 .9-5.6 1.8-8.5 2.6-7-21.8-15.6-43.1-25.5-63.8 9.6-20.4 17.7-41.4 24.5-62.9 5.2 1.5 10.2 3.1 15 4.7 46.6 16 79.3 39.8 79.3 58 0 19.6-34.9 44.9-84.8 61.4zm-149.7-15c25.3 0 45.8-20.5 45.8-45.8s-20.5-45.8-45.8-45.8c-25.3 0-45.8 20.5-45.8 45.8s20.5 45.8 45.8 45.8z"
+              ></path>
+            </svg>
+          </span>
+        </div>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <h4><a href="{%url 'submit_help_request'%}" class="stretched-link">Need Help?</a></h4>
+              <p>Whether you need immediate help, resources, or guidance during emergencies, simply ask, and we’ll connect you with the support you need.</p>
+                <!-- From Uiverse.io by nikk7007 -->
+        <button href="{%url 'submit_help_request'%}"> Ask help</button>
+                    </div>
+                    </div>
+
+          <div class="col-lg-4 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <h4><a href="{%url 'donate_resources'%}" class="stretched-link">Donate</a></h4>
+              <p>Make a difference with our app! Easily donate food, money, or essential resources to help those in need. Your generosity can bring hope and relief to countless lives</p>
+                <button id="button2"> Donate</button>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+      </div>
+
+
+                    <div class="service-card-container" data-aos="fade-up" data-aos-delay="200">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="bi bi-broadcast"></i>
+            </div>
+            <a href="" class="service-link">
+              <h3 class="service-title">Report Disaster</h3>
+            </a>
+            <p class="service-description">
+              Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut nesciunt dolorem.
+            </p>
+            <a href="{% url 'report'%}"class="donate-btn">Report</a>
+          </div>
+        </div>
+        <section id="about" class="about section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <span>About Us<br></span>
+        <h2>About Us</h2>
+        <p>Our features</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+            <img src="{% static 'images/volunteers2.jpg'%}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+            <h3>Our Features.</h3>
+            <p class="fst-italic">
+              Our volunteers help during emergencies and disasters. They provide support, organize donations, and assist people in need. In tough times, our volunteers bring hope and make a difference.
+            </p>
+             <ul>
+              <li><i class="bi bi-check2-all"></i> <span>Blood Donation – People in need can find available blood donations</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Disaster Alerts – Report disasters, and an alert is sent to the admin.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>AI Chatbot – Ask questions about disasters, survival tips, and related topics..</span></li>
+               <li><i class="bi bi-check2-all"></i> <span>Resource Donations – Donate money, blood, food, and other essential resources.</span></li>
+            </ul>
+             <p>
+              Our volunteers are always ready to help during emergencies and disasters. They work quickly and with great care to support people in need. Whether it's providing food, organizing blood donations, or helping with other urgent tasks, our volunteers are there to make sure everyone gets the help they need. In times of crisis, they bring hope and help turn tough situations into opportunities for recovery."
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+</section>
+</main>
+
+
+
+<!----feedbacks---->
+   <div class="container">
+    <h1>Straight from Volunteers</h1>
+    {% for feedback in feedbacks|slice:":3" %}
+        <div class="card">
+            <div class="user-info">
+                {% if feedback.volunteer.profile_picture %}
+                    <img src="{{ feedback.volunteer.profile_picture.url }}" alt="{{ feedback.volunteer.name }}'s profile picture" class="profile-pic">
+                {% else %}
+                    <img src="{% static 'images/default_profile_pic.jpg' %}" alt="Default profile picture" class="profile-pic">
+                {% endif %}
+                <span class="username">{{ feedback.volunteer.name }}</span>
+            </div>
+            <div class="task-info">
+                <p><strong>Task:</strong> {{ feedback.task.name }}</p>
+            </div>
+            <div class="feedback-text">
+                <p>{{ feedback.comments }}</p>
+            </div>
+        </div>
+    {% empty %}
+        <p>No feedback available.</p>
+    {% endfor %}
+</div>
+
+
+  {% elif user.profile.role.name == 'Volunteer' %}
+                <div class="container">
+            <a href="{% url 'campaign_list' %}" class="card-link">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h2 class="card-title">Campaign Dashboard</h2>
+                    <p class="card-description">View all available campaigns</p>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <span class="stat-number">{{ campaigns.count }}</span>
+                            <span class="stat-label">Active Campaigns</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="view-text">View Campaigns</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
+
+
+
+
+  {% else %}
+        {% endif %}
+
+</body>
+</html>
+{%endblock%}

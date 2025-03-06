@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+
+
+    .dashboard-container {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px 0;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .page-title {
+        font-size: 2.4rem;
+        background: linear-gradient(45deg, #32de84, #28c77a);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .page-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        margin: 20px 0;
+        position: relative;
+    }
+
+    .table-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #32de84, #28c77a);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    table th {
+        background: #f8f9fa;
+        color: #2d3748;
+        padding: 18px 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid #edf2f7;
+    }
+
+    table td {
+        padding: 16px 20px;
+        color: #4a5568;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #edf2f7;
+        transition: all 0.2s ease;
+    }
+
+    table tr:last-child td {
+        border-bottom: none;
+    }
+
+    table tr {
+        transition: all 0.3s ease;
+    }
+
+    table tr:hover {
+        background-color: #f8fafc;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-align: center;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .status-badge.pending {
+        background-color: #fff7ed;
+        color: #f59e0b;
+        border: 2px solid #fed7aa;
+    }
+
+    .status-badge.accepted {
+        background-color: #ecfdf5;
+        color: #10b981;
+        border: 2px solid #a7f3d0;
+    }
+
+    .status-badge.rejected {
+        background-color: #fef2f2;
+        color: #ef4444;
+        border: 2px solid #fecaca;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-accept {
+        background: linear-gradient(45deg, #10b981, #059669);
+        color: white;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-reject {
+        background: linear-gradient(45deg, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-accept:before {
+        content: '✓';
+    }
+
+    .btn-reject:before {
+        content: '×';
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        padding: 14px 28px;
+        background: white;
+        color: #1a2b3c;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        margin-top: 30px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .back-link:before {
+        content: '←';
+        margin-right: 8px;
+        font-size: 1.2em;
+    }
+
+    .back-link:hover {
+        transform: translateX(-5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(45deg, #32de84, #28c77a);
+        color: white;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 60px;
+        color: #6c757d;
+        font-size: 1.1rem;
+        background: #f8f9fa;
+    }
+
+    .no-data:before {
+        content: '📋';
+        display: block;
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 1200px) {
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            min-width: 1000px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        body {
+            padding: 15px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+        }
+
+        .btn {
+            padding: 8px 16px;
+        }
+    }
+</style>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Email</th>
+                <th>Status</th>
+
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for application in applications %}
+            <tr>
+                <td>{{ application.name }}</td>
+                <td>{{ application.location }}</td>
+                <td>{{ application.email }}</td>
+                <td>
+                    <span class="status-badge {{ application.status|lower }}">
+                        {{ application.status }}
+                    </span>
+                </td>
+
+                <td>
+                    <a href="{% url 'update_application_status' application.id 'Accepted' %}" class="btn btn-accept">Accept</a>
+                    <a href="{% url 'update_application_status' application.id 'Rejected' %}" class="btn btn-reject">Reject</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="no-data">No applications found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{%endblock%}

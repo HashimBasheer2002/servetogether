@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.title {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+}
+.donation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+.donation-table th, .donation-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+.donation-table th {
+    background-color: #007bff;
+    color: white;
+}
+.donation-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+.collect-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.collect-btn:hover {
+    background-color: #218838;
+}
+</style>
+<div class="container">
+    <h1 class="title">Donated Resources</h1>
+
+    <!-- Available Food Donations Table -->
+    <h2>Available Food Donations</h2>
+    <table class="donation-table">
+        <thead>
+            <tr>
+                <th>Food Type</th>
+                <th>Quantity</th>
+                <th>Contact Name</th>
+                <th>Supply Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donation in available_food_donations %}
+            <tr>
+                <td>{{ donation.food_type }}</td>
+                <td>{{ donation.food_quantity }}</td>
+                <td>{{ donation.contact_name }}</td>
+                <td>{{ donation.supply_date }}</td>
+                <td>
+                    <form method="post" action="{% url 'mark_collected_food' donation.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="collect-btn">Mark as Collected</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No available food donations.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Available Other Donations Table -->
+    <h2>Available Other Donations</h2>
+    <table class="donation-table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Contact Name</th>
+                <th>Supply Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donation in available_other_donations %}
+            <tr>
+                <td>{{ donation.resource_description }}</td>
+                <td>{{ donation.resource_quantity }}</td>
+                <td>{{ donation.contact_name }}</td>
+                <td>{{ donation.supply_date }}</td>
+                <td>
+                    <form method="post" action="{% url 'mark_collected_other' donation.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="collect-btn">Mark as Collected</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No available other donations.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Collected Resources Section -->
+    <h2>Collected Resources</h2>
+    <table class="donation-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description/Type</th>
+                <th>Quantity</th>
+                <th>Contact Name</th>
+                <th>Collected On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donation in collected_resources %}
+            <tr>
+                <td>{{ donation.type }}</td>
+                <td>{{ donation.description }}</td>
+                <td>{{ donation.quantity }}</td>
+                <td>{{ donation.contact_name }}</td>
+                <td>{{ donation.collected_date }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No collected resources yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{%endblock%}

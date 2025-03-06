@@ -1,0 +1,243 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+
+
+    .volunteer-form {
+        margin: 40px auto;
+        max-width: 1100px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 15px 35px rgba(43, 122, 75, 0.1);
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+        align-items: flex-start;
+        backdrop-filter: blur(10px);
+    }
+
+    .form-container {
+        flex: 1;
+    }
+
+    .form-header {
+        margin-bottom: 35px;
+    }
+
+    .form-header h2 {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2b7a4b;
+        margin-bottom: 12px;
+        text-align: left;
+        position: relative;
+    }
+
+    .form-header h2::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #2b7a4b, #3c8f5e);
+        border-radius: 2px;
+    }
+
+    .form-header p {
+        font-size: 16px;
+        color: #6b7280;
+        line-height: 1.6;
+        margin-top: 15px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+    form input,
+    form textarea,
+    form select {
+        width: 100%;
+        padding: 14px 18px;
+        font-size: 15px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        background-color: #ffffff;
+        transition: all 0.3s ease;
+        color: #374151;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    form textarea {
+        height: 120px;
+        resize: vertical;
+        line-height: 1.5;
+    }
+
+    form input:focus,
+    form textarea:focus,
+    form select:focus {
+        border-color: #2b7a4b;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(43, 122, 75, 0.1);
+    }
+
+    form button {
+        background: linear-gradient(45deg, #2b7a4b, #3c8f5e);
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 600;
+        border: none;
+        height: 54px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(43, 122, 75, 0.15);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(43, 122, 75, 0.2);
+    }
+
+    form button:active {
+        transform: translateY(0);
+    }
+
+    .return-link {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 15px;
+        color: #6b7280;
+    }
+
+    .return-link a {
+        color: #2b7a4b;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .return-link a:hover {
+        color: #1f5a36;
+    }
+
+    .applyimage {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .applyimage img {
+        width: 100%;
+        height: auto;
+        border-radius: 16px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .applyimage img:hover {
+        transform: scale(1.02);
+    }
+
+    /* Django Form Specific Styles */
+    form p {
+        margin: 0;
+    }
+
+    form p label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #374151;
+    }
+
+    form p input,
+    form p textarea,
+    form p select {
+        margin-top: 4px;
+    }
+
+    /* Error States */
+    .errorlist {
+        color: #dc2626;
+        font-size: 14px;
+        margin-top: 4px;
+        list-style: none;
+        padding: 0;
+    }
+
+    @media (max-width: 968px) {
+        .volunteer-form {
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        .applyimage {
+            order: -1;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 10px;
+        }
+
+        .volunteer-form {
+            padding: 20px;
+            margin: 20px auto;
+        }
+
+        .form-header h2 {
+            font-size: 24px;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            padding: 12px 16px;
+        }
+    }
+</style>
+
+<div class="volunteer-form">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Be a Superhero</h2>
+            <p>Join our amazing community of volunteers and make a lasting impact in your neighborhood. Together, we can create positive change!</p>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Application</button>
+            <div class="return-link">
+                Maybe later? <a href="{% url 'home' %}">Return to Home</a>
+            </div>
+        </form>
+    </div>
+    <div class="applyimage">
+        <img src="{% static 'images/applyform.jpg' %}" alt="Volunteer Application">
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Donate {{ donation_type|capfirst }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if donation_type == "blood" %}
+            {{ form.blood_group.as_p }}
+            {{ form.blood_amount.as_p }}
+        {% elif donation_type == "food" %}
+            {{ form.food_type.as_p }}
+            {{ form.food_quantity.as_p }}
+        {% elif donation_type == "money" %}
+            {{ form.money_amount.as_p }}  <!-- Render money_amount field -->
+        {% elif donation_type == "other" %}
+            {{ form.resource_description.as_p }}
+            {{ form.resource_quantity.as_p }}
+        {% endif %}
+        
+        <button type="submit">Donate {{ donation_type|capfirst }}</button>
+    </form>
+{% endblock %}

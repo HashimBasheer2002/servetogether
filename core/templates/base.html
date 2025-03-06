@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Serve Together</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="{% static 'assets/css/main.css' %}" rel="stylesheet">
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <!-- Logo Section -->
+      <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
+        <img src="{% static 'images/hand-13.jpg' %}" alt="Logo" class="img-fluid" style="height: 65px;">
+        <span class="sitename ms-2">ServeTogether</span>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          {% if user.is_authenticated %}
+            {% if user.is_staff %}
+              <li><a href="{% url 'home'%}">Home</a></li>
+              <li><a href="{% url 'volunteer_list'%}">Volunteers</a></li>
+              <li><a href="{% url 'view_applications'%}">Applications</a></li>
+              <li><a href="{% url 'help_requests'%}">Requests</a></li>
+              <li><a href="{% url 'bloodbank'%}">Bloodbank</a></li>
+              <li><a href="{% url 'resources'%}">Resources</a></li>
+              <li><a href="{% url 'feedback_list'%}">Feedback</a></li>
+              <li><a href="{% url 'create_campaign'%}">campaign</a></li>
+              <li><a href="{% url 'logout'%}">Logout</a></li>
+            {% elif user.profile.role.name == 'Volunteer' %}
+               <li><a href="{% url 'home'%}">Home</a></li>
+              <li><a href="{% url 'resources'%}">Resources</a></li>
+              <li><a href="{% url 'bloodbank'%}">Bloodbank</a></li>
+              <li><a href="{% url 'task_list'%}">Tasks</a></li>
+              <li><a href="{% url 'feedback_list'%}">Feedback</a></li>
+              <li><a href="{% url 'volunteer_list'%}">Volunteers</a></li>
+              <li><a href="{% url 'update_volunteer_profile'%}">Edit Profile</a></li>
+              <li><a href="{% url 'add_used_resource'%}">Add Report</a></li>
+              {% if volunteer and volunteer.id %}
+              <li><a href="{% url 'view_volunteer_profile' volunteer.id %}">View Profile</a></li>
+              {% endif %}
+
+              <li><a href="{% url 'logout'%}">Logout</a></li>
+            {% elif user.profile.role.name == 'Donor' %}
+              <li><a href="{% url 'home'%}">Home</a></li>
+             <li><a href="{% url 'volunteer_list'%}">Volunteers</a></li>
+              <li><a href="{% url 'bloodbank'%}">Bloodbank</a></li>
+              <li><a href="{% url 'feedback_list'%}">Feedback</a></li>
+              <li><a href="{% url 'logout'%}">Logout</a></li>
+              <li><a class="btn-getstarted" href="{% url 'volunteer_application' %}">Get Started</a></li>
+            {% else %}
+              <li><a href="{% url 'home'%}" class="active">Home</a></li>
+              <li><a href="{% url 'about'%}">About</a></li>
+              <li><a href="{% url 'login'%}">Login</a></li>
+              <li><a href="{% url 'register'%}">Signup</a></li>
+            {% endif %}
+          {% endif %}
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  {% block content %}
+  {% endblock %}
+
+  <footer id="footer" class="footer">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="{% url 'home' %}" class="d-flex align-items-center">
+            <span class="sitename">ServeTogether</span>
+          </a>
+
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><i class="bi bi-chevron-right"></i> <a href="{% url 'about'%}">About us</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+          <h4>Follow Us</h4>
+          <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+          <div class="social-links d-flex">
+            <a href=""><i class="bi bi-twitter"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">ServeTogether</strong> <span>All Rights Reserved</span></p>
+
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+
+    .certify-container {
+    position:relative;
+    left:700px;
+        max-width: 500px;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    h2 {
+        color: #1a344f;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #32de84;
+        outline: none;
+    }
+
+    .btn-certify {
+        background: linear-gradient(45deg, #32de84, #28c77a);
+        color: white;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: 500;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-certify:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(50, 222, 132, 0.2);
+    }
+</style>
+<br><br><br><br>
+
+<div class="certify-container">
+    <h2>Certify {{ volunteer.name }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-certify">Certify Volunteer</button>
+    </form>
+</div>
+<br><br><br><br><br><br>
+{% endblock %}

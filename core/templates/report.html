@@ -1,0 +1,105 @@
+{% extends 'base.html'%}
+{% block content%}
+<style>
+
+
+  form {
+  position:relative;
+  left:650px;
+  top:100px;
+    background: #ffffff;
+    max-width: 500px;
+    width: 100%;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    color: #666;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: none;
+  }
+
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3);
+  }
+
+  /* Responsive Styling */
+  @media (max-width: 600px) {
+    form {
+      padding: 20px;
+    }
+
+    button[type="submit"] {
+      padding: 10px;
+      font-size: 14px;
+    }
+  }
+</style>
+
+<body>
+  <form action="{% url 'send_alert' %}" method="POST">
+    {% csrf_token %}
+    <h2>Submit Disaster Report</h2>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Your name" required>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" placeholder="Describe the situation..." required></textarea>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" placeholder="Enter location" required>
+
+    <label for="phone_number">Phone Number:</label>
+    <input type="text" id="phone_number" name="phone_number" placeholder="Optional">
+
+    <button type="submit">Submit Report</button>
+  </form>
+</body>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

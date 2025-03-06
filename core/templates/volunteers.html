@@ -1,0 +1,38 @@
+<style>
+
+h1 {
+    text-align: center;
+    color: #2E86C1;
+    margin: 20px 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 600px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+ul li {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+ul li:hover {
+    background-color: #f1f1f1;
+}
+
+</style>
+<h1>Volunteer List</h1>
+<ul>
+    {% for volunteer in volunteers %}
+    <li>{{ volunteer.user.username }} - {{ volunteer.skills }}</li>
+    {% endfor %}
+</ul>

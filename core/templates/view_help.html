@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+/* Base Styles */
+body {
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Styles */
+h2 {
+    font-size: 2rem;
+    color: #2d3436;
+    margin: 40px 0 25px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(to right, #1d72b8, #16649a);
+    border-radius: 2px;
+}
+
+/* List Group */
+.list-group {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 20px 0;
+}
+
+.list-group-item {
+    padding: 25px;
+    border: none;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.list-group-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #1d72b8, #16649a);
+    border-radius: 2px;
+}
+
+.list-group-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.list-group-item h5 {
+    font-size: 1.5rem;
+    color: #2d3436;
+    margin-bottom: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.list-group-item h5::before {
+    content: '👤';
+    font-size: 1.2rem;
+}
+
+.list-group-item p {
+    margin-bottom: 12px;
+    color: #636e72;
+    font-size: 1.1rem;
+}
+
+.list-group-item strong {
+    color: #2d3436;
+    font-weight: 600;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Button Styles */
+.btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #1d72b8, #16649a);
+    color: white;
+    box-shadow: 0 4px 15px rgba(29, 114, 184, 0.2);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #16649a, #1d72b8);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(29, 114, 184, 0.3);
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background-color: #e3f2fd;
+    color: #1d72b8;
+    margin-bottom: 10px;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .list-group-item {
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    .list-group-item h5 {
+        font-size: 1.3rem;
+    }
+
+    .list-group-item p {
+        font-size: 1rem;
+    }
+}
+</style>
+
+<div class="container">
+    <h2>Help Requests</h2>
+
+    <div class="list-group">
+        {% for request in pending_requests %}
+        <div class="list-group-item">
+            <h5>{{ request.user.username }}</h5>
+            <div class="status-badge">Pending</div>
+            <p>{{ request.description }}</p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span>📍</span>
+                    <p><strong>Location:</strong> {{ request.location }}</p>
+                </div>
+                <div class="info-item">
+                    <span>📦</span>
+                    <p><strong>Essentials:</strong> {{ request.essentials }}</p>
+                </div>
+                <div class="info-item">
+                    <span>📞</span>
+                    <p><strong>Contact:</strong> {{ request.contact_details }}</p>
+                </div>
+                <div class="info-item">
+                    <span>👥</span>
+                    <p><strong>Volunteers Needed:</strong> {{ request.number }}</p>
+                </div>
+            </div>
+            <a href="{% url 'accept_help_request' request.pk %}" class="btn btn-primary">
+                ✋ Accept Request
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h2>Accepted Help Requests</h2>
+
+    <div class="list-group">
+        {% for request in accepted_requests %}
+        <div class="list-group-item">
+            <h5>{{ request.user.username }}</h5>
+            <div class="status-badge">{{ request.status }}</div>
+            <p>{{ request.description }}</p>
+            <a href="{% url 'send_to_task' request.pk %}" class="btn btn-primary">
+                📋 Send to Task
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
