@@ -51,8 +51,9 @@ class HelpRequest(models.Model):
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('In Progress', 'In Progress'),
+        ('Awaiting Approval', 'Awaiting Approval'),  # Volunteer marked as completed, awaiting admin approval
         ('Completed', 'Completed'),
-        ('Declined', 'Declined'),  # Optional: Add Declined status
+        ('Declined', 'Declined'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='help_requests')
@@ -65,7 +66,6 @@ class HelpRequest(models.Model):
 
     def __str__(self):
         return f"Help Request by {self.user.username} - {self.status}"
-
 
 
 
@@ -134,9 +134,11 @@ class VolunteerApplication(models.Model):
     role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True)
     profile_picture = models.ImageField(upload_to='images/', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    cv = models.FileField(upload_to='cvs/', null=True, blank=True)
 
     def __str__(self):
         return f"Application from {self.name}"
+
 
 
 

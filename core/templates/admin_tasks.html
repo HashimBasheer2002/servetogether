@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning text-white d-flex align-items-center">
+            <i class="fas fa-clock me-2"></i>
+            <h2 class="h4 mb-0">Tasks Awaiting Approval</h2>
+        </div>
+
+        <div class="card-body">
+            {% for task in awaiting_approval_tasks %}
+                <div class="list-group-item border rounded mb-3">
+                    <h5 class="mb-0 text-warning">
+                        <i class="fas fa-user-circle me-2"></i>{{ task.user.username }}
+                    </h5>
+                    <p class="mb-2">{{ task.description }}</p>
+                    <form method="POST" action="{% url 'approve_task_completion' task.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-check"></i> Approve Completion
+                        </button>
+                    </form>
+                </div>
+            {% empty %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> No tasks awaiting approval.
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

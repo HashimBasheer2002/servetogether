@@ -53,6 +53,8 @@
               <li><a href="{% url 'resources'%}">Resources</a></li>
               <li><a href="{% url 'feedback_list'%}">Feedback</a></li>
               <li><a href="{% url 'create_campaign'%}">campaign</a></li>
+              <li><a href="{% url 'admin_task_list'%}">Tasks</a></li>
+
               <li><a href="{% url 'logout'%}">Logout</a></li>
             {% elif user.profile.role.name == 'Volunteer' %}
                <li><a href="{% url 'home'%}">Home</a></li>

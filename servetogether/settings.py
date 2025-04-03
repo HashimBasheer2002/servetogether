@@ -114,15 +114,16 @@ STATICFILES_DIRS = [BASE_DIR / 'static']  # Folder where static files will be st
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Example for Gmail
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'auraapp2024@gmail.com'  # Your email address
-EMAIL_HOST_PASSWORD = 'zaak skqh lktr cvqt'  # Use your generated app password here
+EMAIL_HOST_USER = 'auraapp2024@gmail.com'
+EMAIL_HOST_PASSWORD = 'meib gctl edla yylr'  # Ensure this is correct
 DEFAULT_FROM_EMAIL = 'auraapp2024@gmail.com'
 ADMIN_EMAIL = 'auraapp2024@gmail.com'
 
+
 RAZORPAY_KEY_ID = 'rzp_test_JgjeX5TNahEm3c'
 RAZORPAY_KEY_SECRET = 'aTcDkgmbhCZE6rdmbYRd0CDv'
+

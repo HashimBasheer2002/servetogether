@@ -239,6 +239,7 @@
                 <th>Name</th>
                 <th>Location</th>
                 <th>Email</th>
+                <th>CV</th>
                 <th>Status</th>
 
                 <th>Actions</th>
@@ -250,6 +251,14 @@
                 <td>{{ application.name }}</td>
                 <td>{{ application.location }}</td>
                 <td>{{ application.email }}</td>
+                <td>
+    {% if application.cv %}
+        <a href="{{ application.cv.url }}" target="_blank" class="btn btn-cv">View CV</a>
+    {% else %}
+        No CV
+    {% endif %}
+</td>
+
                 <td>
                     <span class="status-badge {{ application.status|lower }}">
                         {{ application.status }}

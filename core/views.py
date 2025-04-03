@@ -147,7 +147,7 @@ def is_user(user):
 @login_required
 def volunteer_application(request):
     if request.method == 'POST':
-        form = VolunteerApplicationForm(request.POST)
+        form = VolunteerApplicationForm(request.POST, request.FILES)  # Include request.FILES for file upload
         if form.is_valid():
             # Save the form but don't commit to the database yet
             application = form.save(commit=False)
@@ -155,15 +155,16 @@ def volunteer_application(request):
             # Associate the current logged-in user with the application
             application.user = request.user
 
-            # Now save the application with the user
+            # Now save the application with the user and the uploaded CV
             application.save()
 
-            # After saving, redirect or render the success page
-            return render(request, 'application_suucess.html')
+            # Redirect or render the success page
+            return render(request, 'application_suucess.html')  # Fix typo in filename
     else:
         form = VolunteerApplicationForm()
 
     return render(request, 'volunteer_application.html', {'form': form})
+
 # Admin view to see all volunteer applications
 @login_required
 @user_passes_test(is_admin)
@@ -511,23 +512,70 @@ def send_to_task(request, pk):
     help_request.save()
     return redirect('help_requests')  # Redirect back to the admin page or accepted list
 
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import HelpRequest
+
 def task_list(request):
-    # Fetch tasks and completed tasks
-    tasks = HelpRequest.objects.filter(status='Task')
+    """Displays all tasks categorized as active, awaiting approval, and completed."""
+    tasks = HelpRequest.objects.filter(status__in=['Pending', 'In Progress', 'Task'])  # Include 'Task' status
+    awaiting_approval_tasks = HelpRequest.objects.filter(status='Awaiting Approval')
     completed_tasks = HelpRequest.objects.filter(status='Completed')
+
     return render(request, 'task.html', {
         'tasks': tasks,
+        'awaiting_approval_tasks': awaiting_approval_tasks,  # Admin section
         'completed_tasks': completed_tasks
     })
 
-def mark_task_completed(request, pk):
-    if request.method == 'POST':
-        task = get_object_or_404(HelpRequest, pk=pk)
+
+import logging
+
+logger = logging.getLogger(__name__)
+
+@login_required
+def request_task_completion(request, pk):
+    """Allows volunteers to request task completion."""
+    task = get_object_or_404(HelpRequest, pk=pk)
+
+    logger.info(f"User {request.user} attempting to request completion for task {pk}")
+
+    if request.method == "POST":
+        if task.status in ['Pending', 'In Progress', 'Task']:
+            task.status = 'Awaiting Approval'
+            task.save()
+            messages.success(request, "Task completion request sent to admin.")
+            logger.info(f"Task {pk} marked as Awaiting Approval")
+        else:
+            messages.warning(request, "Task cannot be marked for approval.")
+            logger.warning(f"Task {pk} not eligible for approval")
+
+    return redirect('task_list')
+
+
+
+@staff_member_required  # Ensures only admin can approve completion
+def approve_task_completion(request, pk):
+    """Allows admin to approve completion requests."""
+    task = get_object_or_404(HelpRequest, pk=pk)
+
+    if task.status == 'Awaiting Approval':
         task.status = 'Completed'
         task.save()
-        messages.success(request, "Task marked as completed successfully!")
-        return redirect('task_list')
+        messages.success(request, "Task has been marked as completed.")
+    else:
+        messages.warning(request, "Task is not awaiting approval.")
 
+    return redirect('task_list')
+
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def admin_task_list(request):
+    awaiting_approval_tasks = HelpRequest.objects.filter(status='Awaiting Approval')
+    return render(request, 'admin_tasks.html', {'awaiting_approval_tasks': awaiting_approval_tasks})
 
 @login_required
 @user_passes_test(is_admin)

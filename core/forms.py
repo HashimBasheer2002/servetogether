@@ -87,10 +87,15 @@ class CustomUserCreationForm(UserCreationForm):
 class VolunteerApplicationForm(forms.ModelForm):
     class Meta:
         model = VolunteerApplication
-        fields = ['name', 'location', 'gender', 'age', 'qualification', 'certifications', 'contact_details', 'email']
+        fields = ['name', 'location', 'gender', 'age', 'qualification', 'certifications', 'contact_details', 'email', 'cv']
         widgets = {
             'certifications': forms.Textarea(attrs={'rows': 3}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cv'].required = False  # Make CV optional
+
 
 
 # Help Request Form

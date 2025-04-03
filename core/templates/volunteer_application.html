@@ -226,7 +226,9 @@
             <h2>Be a Superhero</h2>
             <p>Join our amazing community of volunteers and make a lasting impact in your neighborhood. Together, we can create positive change!</p>
         </div>
-        <form method="post">
+
+        <!-- Add enctype="multipart/form-data" to allow file uploads -->
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Submit Application</button>
@@ -235,6 +237,7 @@
             </div>
         </form>
     </div>
+
     <div class="applyimage">
         <img src="{% static 'images/applyform.jpg' %}" alt="Volunteer Application">
     </div>

@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views
 from .views import volunteer_application, update_application_status, view_applications, view_volunteers, \
-    certify_volunteer
+    certify_volunteer, request_task_completion, approve_task_completion, admin_task_list
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     # Home page URL pattern (API base)
@@ -57,9 +59,12 @@ urlpatterns = [
     path('about/', views.about, name='about'),
 
 #task
-    path('tasks/', views.task_list, name='task_list'),
+
     path('send-to-task/<int:pk>/', views.send_to_task, name='send_to_task'),
-    path('tasks/<int:pk>/completed/', views.mark_task_completed, name='mark_task_completed'),
+    path('task/request_complete/<int:pk>/', request_task_completion, name='request_task_completion'),
+    path('task/approve/<int:pk>/', approve_task_completion, name='approve_task_completion'),
+    path('tasks/', views.task_list, name='task_list'),  # Regular task list
+    path('admintask/', views.admin_task_list, name='admin_task_list'),  # Admin-only view
 
     path('mark_collected_food/<int:donation_id>/', views.mark_collected_food, name='mark_collected_food'),
     path('mark_collected_other/<int:donation_id>/', views.mark_collected_other, name='mark_collected_other'),
@@ -83,7 +88,10 @@ urlpatterns = [
     path('used-resources/', views.used_resources_list, name='used_resources_list'),
     path('certify/<int:volunteer_id>/', certify_volunteer, name='certify_volunteer'),
 
-
+    path('password_reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
+    path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
 
 ]
 
