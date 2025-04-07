@@ -1,105 +1,141 @@
-{% extends 'base.html'%}
-{% block content%}
-<style>
+{% extends 'base.html' %}
+{% block content %}
+<head>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f6fa;
+    }
 
+    .report-container {
+      max-width: 600px;
+      margin: 100px auto;
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
 
-  form {
-  position:relative;
-  left:650px;
-  top:100px;
-    background: #ffffff;
-    max-width: 500px;
-    width: 100%;
-    padding: 25px 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
+    .report-container h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 25px;
+      font-size: 24px;
+      font-weight: 600;
+    }
 
-  h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-  }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #34495e;
+    }
 
-  label {
-    display: block;
-    margin-bottom: 8px;
-    color: #666;
-    font-weight: bold;
-  }
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: #f9f9f9;
+      transition: 0.3s;
+    }
 
-  input[type="text"],
-  textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 14px;
-  }
+    input[type="text"]:focus,
+    textarea:focus {
+      border-color: #2980b9;
+      outline: none;
+      background-color: #fff;
+    }
 
-  textarea {
-    min-height: 100px;
-    resize: none;
-  }
-
-  button[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px;
-    width: 100%;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background 0.3s ease;
-  }
-
-  button[type="submit"]:hover {
-    background-color: #45a049;
-    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3);
-  }
-
-  /* Responsive Styling */
-  @media (max-width: 600px) {
-    form {
-      padding: 20px;
+    #map {
+      height: 300px;
+      border-radius: 10px;
+      margin-top: 10px;
     }
 
     button[type="submit"] {
-      padding: 10px;
-      font-size: 14px;
+      margin-top: 25px;
+      width: 100%;
+      background-color: #3498db;
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
-  }
-</style>
+
+    button[type="submit"]:hover {
+      background-color: #2980b9;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @media screen and (max-width: 640px) {
+      .report-container {
+        margin: 50px 20px;
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
 
 <body>
-  <form action="{% url 'send_alert' %}" method="POST">
-    {% csrf_token %}
-    <h2>Submit Disaster Report</h2>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" placeholder="Your name" required>
+  <div class="report-container">
+    <form action="{% url 'send_alert' %}" method="POST">
+      {% csrf_token %}
+      <h2>Submit Disaster Report</h2>
 
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" placeholder="Describe the situation..." required></textarea>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required>
 
-    <label for="location">Location:</label>
-    <input type="text" id="location" name="location" placeholder="Enter location" required>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" placeholder="Describe the situation..." required></textarea>
 
-    <label for="phone_number">Phone Number:</label>
-    <input type="text" id="phone_number" name="phone_number" placeholder="Optional">
+      <label for="map">Select Location on Map:</label>
+      <div id="map"></div>
 
-    <button type="submit">Submit Report</button>
-  </form>
+      <!-- Hidden fields to store coordinates -->
+      <input type="hidden" name="latitude" id="latitude" required>
+      <input type="hidden" name="longitude" id="longitude" required>
+
+      <label for="phone_number">Phone Number:</label>
+      <input type="text" id="phone_number" name="phone_number" placeholder="Optional">
+
+      <button type="submit">Submit Report</button>
+    </form>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([20.5937, 78.9629], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const marker = L.marker([20.5937, 78.9629], {
+      draggable: true
+    }).addTo(map);
+
+    function updateLatLng(lat, lng) {
+      document.getElementById('latitude').value = lat;
+      document.getElementById('longitude').value = lng;
+    }
+
+    updateLatLng(20.5937, 78.9629);
+
+    marker.on('dragend', function (e) {
+      const position = marker.getLatLng();
+      updateLatLng(position.lat, position.lng);
+    });
+  </script>
 </body>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 {% endblock %}

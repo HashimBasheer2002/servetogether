@@ -462,12 +462,38 @@ def used_resources_list(request):
 def report(request):
     return render(request, 'report.html')
 
+
+
+import requests
+
+import requests
+
+def reverse_geocode(lat, lon):
+    url = "https://nominatim.openstreetmap.org/reverse"
+    params = {
+        'lat': lat,
+        'lon': lon,
+        'format': 'json'
+    }
+    headers = {
+        'User-Agent': 'aura-disaster-report/1.0 (auraapp2024@gmail.com)'  # Update to your contact if needed
+    }
+    response = requests.get(url, params=params, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        return data.get('display_name', f"Lat: {lat}, Lng: {lon}")
+    return f"Lat: {lat}, Lng: {lon}"
+
 def send_alert(request):
     if request.method == "POST":
         name = request.POST['name']
         description = request.POST['description']
-        location = request.POST['location']
         phone_number = request.POST['phone_number']
+        latitude = request.POST['latitude']
+        longitude = request.POST['longitude']
+
+        # Convert lat/lng to address
+        location = reverse_geocode(latitude, longitude)
 
         # Save the report to the database
         report = DisasterReport(
@@ -478,7 +504,7 @@ def send_alert(request):
         )
         report.save()
 
-        # Send an email with the report details
+        # Email content
         email_subject = 'New Disaster Report Received'
         email_message = (
             f"Name: {name}\n"
@@ -498,9 +524,6 @@ def send_alert(request):
         return render(request, 'success.html')
 
     return render(request, 'reported.html')
-
-
-
 
 
 from django.shortcuts import render

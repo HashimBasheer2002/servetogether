@@ -592,7 +592,27 @@ button:hover {
         <h2>About Us</h2>
         <p>Our features</p>
       </div><!-- End Section Title -->
-
+<div class="container">
+            <a href="{% url 'campaign_list' %}" class="card-link">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h2 class="card-title">Campaign Dashboard</h2>
+                    <p class="card-description">View all available campaigns</p>
+                    <div class="card-stats">
+                        <div class="stat">
+                            <span class="stat-number">{{ campaigns.count }}</span>
+                            <span class="stat-label">Active Campaigns</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="view-text">View Campaigns</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
       <div class="container">
 
         <div class="row gy-4">
@@ -647,6 +667,7 @@ button:hover {
         <p>No feedback available.</p>
     {% endfor %}
 </div>
+
 
 
   {% elif user.profile.role.name == 'Volunteer' %}

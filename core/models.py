@@ -241,6 +241,8 @@ class DisasterReport(models.Model):
     location = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     date_reported = models.DateTimeField(auto_now_add=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
 
     def __str__(self):
         return self.name
